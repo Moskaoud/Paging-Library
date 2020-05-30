@@ -21,12 +21,15 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, Item> {
 
     //this will be called once to load the initial data
     @Override
-    public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull final LoadInitialCallback<Integer, Item> callback) {
+    public void loadInitial(@NonNull LoadInitialParams<Integer> params,
+                            @NonNull final LoadInitialCallback<Integer,
+                                    Item> callback) {
         RetrofitClient.getInstance()
                 .getApi().getAnswers(FIRST_PAGE, PAGE_SIZE, SITE_NAME)
                 .enqueue(new Callback<StackApiResponse>() {
                     @Override
-                    public void onResponse(Call<StackApiResponse> call, Response<StackApiResponse> response) {
+                    public void onResponse(Call<StackApiResponse> call,
+                                           Response<StackApiResponse> response) {
                         if (response.body() != null) {
                             callback.onResult(response.body().items, null, FIRST_PAGE + 1);
                         }
@@ -41,12 +44,14 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, Item> {
 
     //this will load the previous page
     @Override
-    public void loadBefore(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, Item> callback) {
+    public void loadBefore(@NonNull final LoadParams<Integer> params,
+                           @NonNull final LoadCallback<Integer, Item> callback) {
         RetrofitClient.getInstance()
                 .getApi().getAnswers(params.key, PAGE_SIZE, SITE_NAME)
                 .enqueue(new Callback<StackApiResponse>() {
                     @Override
-                    public void onResponse(Call<StackApiResponse> call, Response<StackApiResponse> response) {
+                    public void onResponse(Call<StackApiResponse> call,
+                                           Response<StackApiResponse> response) {
 
                         //if the current page is greater than one
                         //we are decrementing the page number
@@ -69,13 +74,15 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, Item> {
 
     //this will load the next page
     @Override
-    public void loadAfter(@NonNull final LoadParams<Integer> params, @NonNull final LoadCallback<Integer, Item> callback) {
+    public void loadAfter(@NonNull final LoadParams<Integer> params,
+                          @NonNull final LoadCallback<Integer, Item> callback) {
         RetrofitClient.getInstance()
                 .getApi()
                 .getAnswers(params.key, PAGE_SIZE, SITE_NAME)
                 .enqueue(new Callback<StackApiResponse>() {
                     @Override
-                    public void onResponse(Call<StackApiResponse> call, Response<StackApiResponse> response) {
+                    public void onResponse(Call<StackApiResponse> call,
+                                           Response<StackApiResponse> response) {
 
                         if (response.body() != null) {
                             //if the response has next page
