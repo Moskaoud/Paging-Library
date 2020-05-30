@@ -22,8 +22,7 @@ public class ItemDataSource extends PageKeyedDataSource<Integer, Item> {
     //this will be called once to load the initial data
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params,
-                            @NonNull final LoadInitialCallback<Integer,
-                                    Item> callback) {
+                            @NonNull final LoadInitialCallback<Integer, Item> callback) {
         RetrofitClient.getInstance()
                 .getApi().getAnswers(FIRST_PAGE, PAGE_SIZE, SITE_NAME)
                 .enqueue(new Callback<StackApiResponse>() {
